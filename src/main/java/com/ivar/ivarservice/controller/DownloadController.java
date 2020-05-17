@@ -73,7 +73,7 @@ public class DownloadController
 	{
 		try
 		{
-			File file = ResourceUtils.getFile( "classpath:csv/list.csv" );
+			File file = new File( "" );
 			BufferedReader fileIn = new BufferedReader( new FileReader( file ) );
 			String line;
 			line = fileIn.readLine(); // read and discard header
