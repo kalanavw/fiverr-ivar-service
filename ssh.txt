@@ -1,0 +1,1 @@
+ssh -i "mennyshalom.pem" ubuntu@ec2-3-21-166-173.us-east-2.compute.amazonaws.com

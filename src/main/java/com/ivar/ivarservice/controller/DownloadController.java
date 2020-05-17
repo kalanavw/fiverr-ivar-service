@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
 import java.net.URL;
@@ -21,7 +22,7 @@ import java.util.*;
  * Copyright (c) 2018. scicom.com.my - All Rights Reserved
  * Created by kalana.w on 5/14/2020.
  */
-@RestController
+@Controller
 @RequestMapping("/")
 public class DownloadController
 {
@@ -36,17 +37,33 @@ public class DownloadController
 	@Autowired
 	private ResultRepository resultRepository;
 
-	@GetMapping("download")
-	public ResponseEntity<?> download()
+	@GetMapping()
+	public String index( Model model )
 	{
-		loadCompanyList();
-		new Thread( this::loadCompanyList ).start();
-		//		new Thread( this::loadPriceCsv ).start();
-		new Thread( this::loadPages ).start();
+		return "index";
+	}
 
+	@GetMapping("download")
+	public String download( Model model )
+	{
 		Map<String, String> map = new HashMap<>();
-		map.put( "message", "processeing" );
-		return ResponseEntity.ok( map );
+		try
+		{
+			loadCompanyList();
+			loadPriceCsv();
+			loadPages();
+		}
+		catch ( Exception e )
+		{
+			map.put( "status", "-1" );
+			map.put( "message", "Error" );
+			model.addAllAttributes( map );
+			return "index";
+		}
+		map.put( "status", "1" );
+		map.put( "message", "success" );
+		model.addAllAttributes( map );
+		return "index";
 	}
 
 	/**
@@ -149,7 +166,7 @@ public class DownloadController
 	public ResponseEntity<?> calculate()
 	{
 		loadCompanyList();
-		int n = this.symbols.size() - 5900;
+		int n = this.symbols.size();
 		resultTable_str = new String[n + 3][13];
 		resultTable_num = new double[13][n + 3];
 
@@ -371,9 +388,9 @@ public class DownloadController
 	}
 
 	@GetMapping("saveResult")
-	public ResponseEntity saveResult()
+	public String saveResult( Model model )
 	{
-
+		Map<String, String> map = new HashMap<>();
 		try
 		{
 			File file = ResourceUtils.getFile( "RESULT.csv" );
@@ -390,7 +407,7 @@ public class DownloadController
 				//				}
 				if ( data.length < 13 )
 				{
-					String[] dataNew = new String[12];
+					String[] dataNew = new String[13];
 					for ( int i = 0; i < data.length; i++ )
 					{
 						dataNew[i] = data[i];
@@ -410,9 +427,22 @@ public class DownloadController
 		}
 		catch ( IOException e )
 		{
-			e.printStackTrace();
+			map.put( "status", "-1" );
+			map.put( "message", "error" );
+			return "index";
 		}
 
-		return ResponseEntity.ok().build();
+		map.put( "status", "1" );
+		map.put( "message", "success" );
+		model.addAllAttributes( map );
+		return "index";
+	}
+
+	@GetMapping("viewIvar")
+	public String viewIvar( Model model )
+	{
+		List<Result> all = this.resultRepository.findAll();
+		model.addAttribute( "result", all );
+		return "index";
 	}
 }
