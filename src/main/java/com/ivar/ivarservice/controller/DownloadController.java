@@ -33,6 +33,8 @@ public class DownloadController
 	private String dataFolderLocation;
 	@Value("${htm.folder.location}")
 	private String htmFolderLocation;
+	@Value("${data.file.company.list.location}")
+	private String companyListLocation;
 
 	@Autowired
 	private ResultRepository resultRepository;
@@ -73,7 +75,7 @@ public class DownloadController
 	{
 		try
 		{
-			File file = new File( "" );
+			File file = new File( companyListLocation );
 			BufferedReader fileIn = new BufferedReader( new FileReader( file ) );
 			String line;
 			line = fileIn.readLine(); // read and discard header
