@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Copyright (c) 2018. scicom.com.my - All Rights Reserved
@@ -443,8 +445,18 @@ public class DownloadController
 	@GetMapping("viewIvar")
 	public String viewIvar( Model model )
 	{
+		return "viewIvar.html";
+	}
+
+	@GetMapping("search")
+	public String Search( Model model, @RequestParam int period, @RequestParam String startDate, @RequestParam String stockName )
+	{
 		List<Result> all = this.resultRepository.findAll();
+		if ( stockName != null && !stockName.trim().isEmpty() )
+		{
+			all = all.stream().filter( result -> result.getSymbol().equalsIgnoreCase( stockName ) ).collect( Collectors.toList() );
+		}
 		model.addAttribute( "result", all );
-		return "index";
+		return "viewIvar.html";
 	}
 }

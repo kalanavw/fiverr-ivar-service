@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Ivar Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <br>
+    <h2><u>Find Stocks based on iVaR</u></h2>
+    <br>
+
+    <div class="col-md-12">
+        <div class="row">
+            <button onclick="setPeriod(1)" type="button" class="btn btn-outline-primary" style="margin-left:10px">1M&nbsp;</button>
+            <button onclick="setPeriod(2)" type="button" class="btn btn-outline-primary" style="margin-left:10px">2M&nbsp;</button>
+            <button onclick="setPeriod(3)" type="button" class="btn btn-outline-primary" style="margin-left:10px">3M&nbsp;</button>
+            <button onclick="setPeriod(4)" type="button" class="btn btn-outline-primary" style="margin-left:10px">4M&nbsp;</button>
+            <button onclick="setPeriod(6)" type="button" class="btn btn-outline-primary" style="margin-left:10px">6M&nbsp;</button>
+            <button onclick="setPeriod(9)" type="button" class="btn btn-outline-primary" style="margin-left:10px">9M&nbsp;</button>
+        </div>
+        <br>
+        <div class="row">
+            <button onclick="setPeriod(12)" type="button" class="btn btn-outline-primary" style="margin-left:10px">1Y&nbsp;</button>
+            <button onclick="setPeriod(18)" type="button" class="btn btn-outline-primary" style="margin-left:10px">18m</button>
+            <button onclick="setPeriod(24)" type="button" class="btn btn-outline-primary" style="margin-left:10px">2Y&nbsp;</button>
+            <button onclick="setPeriod(36)" type="button" class="btn btn-outline-primary" style="margin-left:10px">3Y&nbsp;</button>
+            <button onclick="setPeriod(60)" type="button" class="btn btn-outline-primary" style="margin-left:10px">5Y&nbsp;</button>
+            <button onclick="setPeriod(120)" type="button" class="btn btn-outline-primary" style="margin-left:10px">10Y</button>
+        </div>
+        <br><br>
+        <form action="#" th:action="@{/search}" th:method="GET">
+            <input type="hidden" name="period" id="period">
+            <div class="row">
+                <div class="col">
+                    <input type="date" class="form-control" name="startDate" placeholder="Start Date">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Stock Name" name="stockName">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="submit" class="form-control btn btn-outline-success" value="Search" placeholder="">
+                </div>
+            </div>
+        </form>
+
+        <br><br>
+        <div class="row">
+            <table class="table table-responsive table-bordered">
+                <tr>
+                    <th>Symbol</th>
+                    <th> 1Y</th>
+                    <th> 3Y</th>
+                    <th> 5Y</th>
+                    <th> 10Y</th>
+                    <th> Norm 1Y</th>
+                    <th> Norm 3Y</th>
+                    <th> Norm 5Y</th>
+                    <th> Norm 10Y</th>
+                    <th> Perf 1Y</th>
+                    <th> Perf 3Y</th>
+                    <th> Perf 5Y</th>
+                    <th> Perf 10Y</th>
+                </tr>
+                <tr th:each="list: ${result}">
+                    <td th:text="${list.symbol}"></td>
+                    <td th:text="${list.y1}"></td>
+                    <td th:text="${list.y3}"></td>
+                    <td th:text="${list.y5}"></td>
+                    <td th:text="${list.y10}"></td>
+                    <td th:text="${list.normY1}"></td>
+                    <td th:text="${list.normY3}"></td>
+                    <td th:text="${list.normY5}"></td>
+                    <td th:text="${list.normY10}"></td>
+                    <td th:text="${list.perfY1}"></td>
+                    <td th:text="${list.perfY3}"></td>
+                    <td th:text="${list.perfY5}"></td>
+                    <td th:text="${list.perfY10}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    setPeriod(1);
+ function setPeriod(value){
+    document.getElementById('period').value=value;
+ }
+
+
+</script>
+</body>
+</html>

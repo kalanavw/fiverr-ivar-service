@@ -42,44 +42,5 @@
         </td>
     </tr>
 </table>
-<br>
-<br>
-<h2>Result </h2>
-<div class="row">
-    <div class="col-md-10">
-        <table class="table table-responsive table-striped table-bordered">
-            <tr>
-                <th>Symbol</th>
-                <th> 1Y</th>
-                <th> 3Y</th>
-                <th> 5Y</th>
-                <th> 10Y</th>
-                <th> Norm 1Y</th>
-                <th> Norm 3Y</th>
-                <th> Norm 5Y</th>
-                <th> Norm 10Y</th>
-                <th> Perf 1Y</th>
-                <th> Perf 3Y</th>
-                <th> Perf 5Y</th>
-                <th> Perf 10Y</th>
-            </tr>
-            <tr th:each="list: ${result}">
-                <td th:text="${list.symbol}"></td>
-                <td th:text="${list.y1}"></td>
-                <td th:text="${list.y3}"></td>
-                <td th:text="${list.y5}"></td>
-                <td th:text="${list.y10}"></td>
-                <td th:text="${list.normY1}"></td>
-                <td th:text="${list.normY3}"></td>
-                <td th:text="${list.normY5}"></td>
-                <td th:text="${list.normY10}"></td>
-                <td th:text="${list.perfY1}"></td>
-                <td th:text="${list.perfY3}"></td>
-                <td th:text="${list.perfY5}"></td>
-                <td th:text="${list.perfY10}"></td>
-            </tr>
-        </table>
-    </div>
-</div>
 </body>
 </html>
