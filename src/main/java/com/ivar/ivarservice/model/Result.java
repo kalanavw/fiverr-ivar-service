@@ -1,6 +1,5 @@
-package com.ivar.ivarservice.mode;
+package com.ivar.ivarservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -18,8 +17,7 @@ import java.time.LocalDateTime;
 @DynamicUpdate
 @Table(name = "RESULTS")
 @NoArgsConstructor
-public class Result
-{
+public class Result {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false, updatable = false)
@@ -27,6 +25,9 @@ public class Result
 
 	@Column(name = "SYMBOL")
 	private String symbol;
+
+	@Column(name = "IVAR")
+	private String ivar;
 
 	@Column(name = "Y1")
 	private String y1;
@@ -68,9 +69,9 @@ public class Result
 	@CreatedDate
 	private LocalDateTime createdDate = LocalDateTime.now();
 
-	public Result( String symbol, String y1, String y3, String y5, String y10, String normY1, String normY3, String normY5, String normY10, String perfY1, String perfY3, String perfY5, String perfY10 )
-	{
+	public Result(String symbol, String ivar, String y1, String y3, String y5, String y10, String normY1, String normY3, String normY5, String normY10, String perfY1, String perfY3, String perfY5, String perfY10) {
 		this.symbol = symbol;
+		this.ivar = ivar;
 		this.y1 = y1;
 		this.y3 = y3;
 		this.y5 = y5;

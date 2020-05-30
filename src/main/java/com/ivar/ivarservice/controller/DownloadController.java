@@ -1,3 +1,4 @@
+/*
 package com.ivar.ivarservice.controller;
 
 import com.ivar.ivarservice.mode.Result;
@@ -20,10 +21,47 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.*;
 import java.util.stream.Collectors;
 
+*/
 /**
  * Copyright (c) 2018. scicom.com.my - All Rights Reserved
  * Created by kalana.w on 5/14/2020.
- */
+ * <p>
+ * This function loads name of symbols to array for further downloading data
+ * <p>
+ * This function loads history data for company list that have to be
+ * read by loadCompanyList
+ * Sleep time introduced to avoid ban from web server
+ * <p>
+ * This function loads information about companies in form of html pages
+ * No parsing done here
+ * Sleep time introduced to avoid ban from web server
+ * <p>
+ * This method loads data for further calculations
+ * Input data - fileName
+ * First column - data (keeps for future)
+ * Fifth column - close price
+ * <p>
+ * Input data
+ * y - number of years
+ * norm - normalized values
+ * Output data - iVar integral
+ * Dimension:
+ * If normalized = false
+ * Unit of price multiplied by Unit of Time
+ * If normalized = true
+ * Unit of Time
+ * Unit of price - dimension of price in input data
+ * Unit of time - one tick in input data (no filtering for weekend implemented)
+ *
+ * @throws NumberFormatException
+ * <p>
+ * Convert date to number for comparison
+ * <p>
+ * Standard correlation function
+ * xs, ys - arrays of data for correlation
+ * output - correlation coefficient
+ *//*
+
 @Controller
 @RequestMapping("/")
 public class DownloadController
@@ -70,9 +108,11 @@ public class DownloadController
 		return "index";
 	}
 
-	/**
-	 * This function loads name of symbols to array for further downloading data
-	 */
+	*/
+/**
+ * This function loads name of symbols to array for further downloading data
+ *//*
+
 	private void loadCompanyList()
 	{
 		try
@@ -96,12 +136,42 @@ public class DownloadController
 		}
 	}
 
-	/**
-	 * This function loads history data for company list that have to be
-	 * read by loadCompanyList
-	 * Sleep time introduced to avoid ban from web server
-	 */
-	@Async
+	*/
+/**
+ * This function loads history data for company list that have to be
+ * read by loadCompanyList
+ * Sleep time introduced to avoid ban from web server
+ * <p>
+ * This function loads information about companies in form of html pages
+ * No parsing done here
+ * Sleep time introduced to avoid ban from web server
+ * <p>
+ * This method loads data for further calculations
+ * Input data - fileName
+ * First column - data (keeps for future)
+ * Fifth column - close price
+ * <p>
+ * Input data
+ * y - number of years
+ * norm - normalized values
+ * Output data - iVar integral
+ * Dimension:
+ * If normalized = false
+ * Unit of price multiplied by Unit of Time
+ * If normalized = true
+ * Unit of Time
+ * Unit of price - dimension of price in input data
+ * Unit of time - one tick in input data (no filtering for weekend implemented)
+ *
+ * @throws NumberFormatException
+ * <p>
+ * Convert date to number for comparison
+ * <p>
+ * Standard correlation function
+ * xs, ys - arrays of data for correlation
+ * output - correlation coefficient
+ *//*
+
 	private void loadPriceCsv()
 	{
 		String line1 = "https://query1.finance.yahoo.com/v7/finance/download/";
@@ -125,12 +195,13 @@ public class DownloadController
 		}
 	}
 
-	/**
-	 * This function loads information about companies in form of html pages
-	 * No parsing done here
-	 * Sleep time introduced to avoid ban from web server
-	 */
-	@Async
+	*/
+/**
+ * This function loads information about companies in form of html pages
+ * No parsing done here
+ * Sleep time introduced to avoid ban from web server
+ *//*
+
 	private void loadPages()
 	{
 		String line1 = "https://finance.yahoo.com/quote/";
@@ -260,12 +331,34 @@ public class DownloadController
 		}
 	}
 
-	/**
-	 * This method loads data for further calculations
-	 * Input data - fileName
-	 * First column - data (keeps for future)
-	 * Fifth column - close price
-	 */
+	*/
+/**
+ * This method loads data for further calculations
+ * Input data - fileName
+ * First column - data (keeps for future)
+ * Fifth column - close price
+ * <p>
+ * Input data
+ * y - number of years
+ * norm - normalized values
+ * Output data - iVar integral
+ * Dimension:
+ * If normalized = false
+ * Unit of price multiplied by Unit of Time
+ * If normalized = true
+ * Unit of Time
+ * Unit of price - dimension of price in input data
+ * Unit of time - one tick in input data (no filtering for weekend implemented)
+ *
+ * @throws NumberFormatException
+ * <p>
+ * Convert date to number for comparison
+ * <p>
+ * Standard correlation function
+ * xs, ys - arrays of data for correlation
+ * output - correlation coefficient
+ *//*
+
 	private void loadList( String fileName ) throws IOException
 	{
 		BufferedReader fileIn = new BufferedReader( new FileReader( fileName ) );
@@ -284,21 +377,23 @@ public class DownloadController
 
 	}
 
-	/**
-	 * Input data
-	 * y - number of years
-	 * norm - normalized values
-	 * Output data - iVar integral
-	 * Dimension:
-	 * If normalized = false
-	 * Unit of price multiplied by Unit of Time
-	 * If normalized = true
-	 * Unit of Time
-	 * Unit of price - dimension of price in input data
-	 * Unit of time - one tick in input data (no filtering for weekend implemented)
-	 *
-	 * @throws NumberFormatException
-	 */
+	*/
+/**
+ * Input data
+ * y - number of years
+ * norm - normalized values
+ * Output data - iVar integral
+ * Dimension:
+ * If normalized = false
+ * Unit of price multiplied by Unit of Time
+ * If normalized = true
+ * Unit of Time
+ * Unit of price - dimension of price in input data
+ * Unit of time - one tick in input data (no filtering for weekend implemented)
+ *
+ * @throws NumberFormatException
+ *//*
+
 	public double iVarCalculate( int y, boolean norm )
 	{
 		double iVarIntegral = 0;
@@ -336,9 +431,11 @@ public class DownloadController
 		return Math.round( iVarIntegral * 10000.0 ) / 10000.0;
 	}
 
-	/**
-	 * Convert date to number for comparison
-	 */
+	*/
+/**
+ * Convert date to number for comparison
+ *//*
+
 	private int dateCode( String dateLine )
 	{
 		int Year = Integer.parseInt( dateLine.substring( 0, 4 ) );
@@ -347,11 +444,13 @@ public class DownloadController
 		return 10000 * Year + 100 * Month + Day;
 	}
 
-	/**
-	 * Standard correlation function
-	 * xs, ys - arrays of data for correlation
-	 * output - correlation coefficient
-	 */
+	*/
+/**
+ * Standard correlation function
+ * xs, ys - arrays of data for correlation
+ * output - correlation coefficient
+ *//*
+
 	public static double Correlation( double[] xs, double[] ys )
 	{
 
@@ -460,3 +559,4 @@ public class DownloadController
 		return "viewIvar.html";
 	}
 }
+*/

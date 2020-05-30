@@ -1,6 +1,6 @@
 package com.ivar.ivarservice.repository;
 
-import com.ivar.ivarservice.mode.Result;
+import com.ivar.ivarservice.model.Result;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
